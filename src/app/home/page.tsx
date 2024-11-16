@@ -15,7 +15,7 @@ import { getUser } from '@/actions/get-user'
 
 export default async function home() {
   
-  
+  //testtestaetsdf
 
   const {user} = await getUser()
   if (user==null) {

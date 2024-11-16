@@ -16,8 +16,8 @@ const Homepage = async ({
     const {data: orgData, error: selectOrgError} = await supabase.from("OrganizationsTbl").select().eq("orgId", orgId).single()
     console.log(orgData)
 
-    userData
-    otherUserData
+    //ausdavsjhd
+
     return(
         <div>
             {orgData.orgName}
