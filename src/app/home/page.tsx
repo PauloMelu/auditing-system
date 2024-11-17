@@ -16,7 +16,7 @@ import { getUser } from '@/actions/get-user'
 export default async function home() {  
 
   const {user} = await getUser()
-
+  //test
   
   console.log(user)
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
