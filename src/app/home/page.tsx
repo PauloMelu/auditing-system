@@ -16,8 +16,9 @@ import { getUser } from '@/actions/get-user'
 export default async function home() {
   
   //testtestaetsdf
-  //branch ni melu
+  //branch ni melu test
   //test pull 2
+
   
 
   const {user} = await getUser()
