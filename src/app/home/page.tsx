@@ -16,9 +16,6 @@ import { getUser } from '@/actions/get-user'
 export default async function home() {  
 
   const {user} = await getUser()
-  if (user==null) {
-    redirect('/login')
-  }
 
   
   console.log(user)
