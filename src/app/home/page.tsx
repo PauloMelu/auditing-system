@@ -17,7 +17,8 @@ export default async function home() {
   
   //testtestaetsdf
   //branch ni melu
-  //test pull
+  //test pull 2
+  
 
   const {user} = await getUser()
   if (user==null) {
