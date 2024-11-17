@@ -12,7 +12,7 @@ export async function joinOrg(formData: FormData) {
     const orgPassword = formData.get('orgPassword') as string
     const orgName = formData.get('orgName') as string
 
-    
+    //testing kung nagana
     //check if org exists
     const {data: orgData, error: selectOrgError } = await supabase.from("OrganizationsTbl").select().eq("orgName", orgName).single()
     console.log(orgData, orgPassword)
