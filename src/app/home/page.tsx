@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { Button } from '@/components/ui/button'
-import { signOut } from '../login/actions'
+import { signOut } from '../(auth)/actions'
 import { OrgMemberContext, useOrgMember } from '@/components/orgMember-provider'
 import { OrganizationMembersTbl } from '@/types/types'
 import { useContext, useEffect, useState } from 'react'
@@ -13,13 +13,7 @@ import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 
 
-export default async function home() {
-  
-  //testtestaetsdf
-  //branch ni melu test again again again final test
-  //test pull 2
-
-  
+export default async function home() {  
 
   const {user} = await getUser()
   if (user==null) {
