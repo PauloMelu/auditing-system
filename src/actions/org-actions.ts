@@ -1,54 +1,84 @@
 'use server'
-import { OrganizationMembersTbl, OrganizationsTblType } from "@/types/types";
+
 import { createClient } from "@/utils/supabase/server";
+import { getUser } from "./get-user";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
+
 
 export async function joinOrg(formData: FormData) {
-
     const supabase = await createClient()
 
     const orgPassword = formData.get('orgPassword') as string
-    const { data: { user } } = await supabase.auth.getUser();
+    const orgName = formData.get('orgName') as string
 
-    const {data: orgData, error: selectOrgError } = await supabase.from("OrganizationsTbl").select().eq("orgPassword", orgPassword).returns<OrganizationsTblType|null>().single()
+    
+    //check if org exists
+    const {data: orgData, error: selectOrgError } = await supabase.from("OrganizationsTbl").select().eq("orgName", orgName).single()
     console.log(orgData, orgPassword)
-    const { data: memberData, error: selectMemberError} = await supabase.from("OrganizationMembersTbl").select().eq("userId", user?.id).eq("orgId", orgData?.orgId).returns<OrganizationMembersTbl>().single()
-    console.log("member data:")
-    console.log(memberData, selectMemberError)
 
-    if(selectMemberError)
-        {
-        console.log("member not found")
-        requestJoin()
-        }
-    else
-    {
-        console.log("member found")
-    }
+    //if doesn't exist, go to error
+    if(selectOrgError){
+        redirect('/error')
         
-    //ADD CODE:
-    //make request to organization owner before inserting to members
-    
-    /*
-    const { error } = await supabase.from("OrganizationMembersTbl").insert({
-        orgId: orgData?.orgId,
-        userId: user?.id
-    });
-    
-      
-    console.log(error)
+    }
 
+    //if exist, check password
+    if(orgData.orgPassword == orgPassword){
+        //if password correct, create member then go home
+        createMember(orgData.orgId, "member")
+        redirect('/home') 
+    }
+    //else, go to error
+    redirect('/error')
+}
+
+
+
+
+
+export async function createOrg(formData: FormData) {
+    const supabase = await createClient()
+
+    const orgName = formData.get('orgName')
+
+    //insert to orgs table
+    const {error} = await supabase.from("OrganizationsTbl").insert({
+        orgName: orgName,
+        orgPassword: formData.get('password')
+    })
+
+    console.log(error)
     if (error) {
         redirect('/error')
     }
 
+    //get data of the recently inserted org
+    const {data: insertedOrg, error: getOrgIdError} = await supabase.from("OrganizationsTbl").select('orgId').eq("orgName", orgName).single()
+    
+    //create a member for the recently inserted org with the title auditor
+    createMember(insertedOrg.orgId, "auditor")
+    console.log(insertedOrg.orgId)
+
+    //go home
     revalidatePath('/', 'layout')
-    redirect('/organization')
-    */
+    redirect('/home')
+
 }
 
+async function createMember(orgId: number, userType: string){
+    const supabase = await createClient()
+    const user = await getUser()
 
+    //create new member
+    const {error} = await supabase.from("OrganizationMembersTbl").insert({
+        orgId: orgId,
+        userId: user.id,
+        userType: userType
+    });
 
-async function requestJoin() {
-    console.log("pajoin pls")
+    console.log(error)
+    if (error) {
+        redirect('/error')
+    }
 }
-

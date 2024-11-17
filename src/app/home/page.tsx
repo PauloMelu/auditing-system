@@ -1,24 +1,17 @@
 
-import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { Button } from '@/components/ui/button'
 import { signOut } from '../(auth)/actions'
-import { OrgMemberContext, useOrgMember } from '@/components/orgMember-provider'
-import { OrganizationMembersTbl } from '@/types/types'
-import { useContext, useEffect, useState } from 'react'
 import { joinOrg } from '@/actions/org-actions'
-import { revalidatePath } from 'next/cache'
-import { log } from 'console'
 import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 
 
 export default async function home() {  
 
-  const {user} = await getUser()
+  const user = await getUser()
   //test
   
-  console.log(user)
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
   const { data: userOrgs, error } = await supabase.from("OrganizationMembersTbl")
@@ -33,7 +26,7 @@ export default async function home() {
     )
   `).eq("userId", user.id)
 
-  console.log(userOrgs)
+
 
   return (
     <div>
@@ -45,12 +38,11 @@ export default async function home() {
         </div>
       ))}
 
-
-      <form action="">
-        <input id="orgPassword" name="orgPassword" type="text" placeholder="org password" />
-        <Button formAction={joinOrg}>Join Org</Button>
-      </form>
-
+      <br />
+      <Link href="/home/create">Create</Link>
+      <br />
+      <Link href="/home/join">Join</Link>
+      <br />
       <button onClick={signOut}>Signout</button>
     </div>
   )

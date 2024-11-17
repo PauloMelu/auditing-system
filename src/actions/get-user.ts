@@ -11,5 +11,5 @@ export async function getUser(){
         redirect('/')
       }
     
-    return data
+    return data.user
 }

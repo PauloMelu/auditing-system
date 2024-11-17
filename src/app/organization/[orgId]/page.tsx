@@ -1,5 +1,4 @@
 import { getUser } from "@/actions/get-user"
-import { useOrgMember } from "@/components/orgMember-provider"
 import { createClient } from "@/utils/supabase/server"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
