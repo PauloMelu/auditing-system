@@ -1,5 +1,5 @@
 import { login, signup } from "../actions"
-
+import './style.css'
 export default function LoginPage() {
   return (
     <form>
@@ -9,7 +9,7 @@ export default function LoginPage() {
       <label htmlFor="password">Password:</label>
       <input id="password" name="password" type="password" required />
       
-      <button formAction={login}>Log in</button>
+      <button className="btn" formAction={login}>Log in</button>
     </form>
   )
 }

@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.Login{
+    padding: 20px;
+    margin-top: 10px;
+    margin-left: 57%;
+}
+
+.nav{
+    display: flex;
+    margin-top: 10px;
+    margin: 15px;
+    height: 100px;
+    border-radius: 30px;
+    background-color: rgb(236, 176, 63);
+}
+
+.logo{
+    font-family:fantasy;
+    font-size: 35px;
+    margin-top: 22px;
+    margin-left: 35px;
+}
+.Login .btn{
+    width: 130px;
+    height: 40px;
+    font-weight: 500;
+    background: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+#signup{
+    margin-left: 15px;
+    background-color: rgb(255, 255, 255, 0.7);
+}
+
+.btn.loginbtn{
+    background-color: rgb(255, 255, 255, 0.7);
+}
+.btn:hover{
+    background: rgb(255, 255, 255, 0.4);
+}
+#signup:hover{
+    background: rgb(255, 255, 255, 0.4);
+}
