@@ -6,6 +6,7 @@ import { joinOrg } from "@/actions/org-actions";
 import Link from "next/link";
 import './style.css'
 //hi
+//testing
 export default function Home() {
   return (
     <body>
