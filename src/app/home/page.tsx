@@ -7,10 +7,10 @@ import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 
 
-export default async function home() {  
+export default async function home() {
 
   const user = await getUser()
-  
+
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
   const { data: userOrgs, error } = await supabase.from("OrganizationMembersTbl")
@@ -32,8 +32,12 @@ export default async function home() {
       <p>Hello {user.user_metadata.firstName} {user.user_metadata.lastName}</p>
 
       {userOrgs.map(userOrg => (
-        <div key = {userOrg.orgId}>
-          <Link href={`/organization/${userOrg.OrganizationsTbl.orgName}`}>{userOrg.OrganizationsTbl.orgName}</Link>
+        <div className='orgs'>
+          <div className='cards'>
+            <div key={userOrg.orgId}>
+              <Link href={`/organization/${userOrg.OrganizationsTbl.orgName}`}>{userOrg.OrganizationsTbl.orgName}</Link>
+            </div>
+          </div>
         </div>
       ))}
 
