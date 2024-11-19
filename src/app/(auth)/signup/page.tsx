@@ -1,24 +1,36 @@
 import { login, signup } from "../actions"
-
+import './style.css'
 export default function SignupPage() {
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
-
-      <label htmlFor="firstName">First Name:</label>
-      <input id="firstName" name="firstName" type="text" required/>
-
-      <label htmlFor="lastName">Last Name:</label>
-      <input id="lastName" name="lastName" type="text" required/>
-
-      <label htmlFor="studentNumber">Student Number:</label>
-      <input id="studentNumber" name="studentNumber" type="text" required/>
+   <body>
+    
+    <div className="wrapper">
+     <form>
+      <h1>SignUp</h1>
+      <div className="input-box">
+      <input className="email" name="email" type="email" placeholder="Email" required />
+      </div>
       
-      <button formAction={signup}>Sign up</button>
+      <div className="input-box">
+      <input className="password" name="password" type="password" placeholder="Password" required />
+      </div>
+           
+      <div className="input-box">
+      <input className="firstName" name="firstName" type="text" placeholder="FirstName"required/>
+      </div>
+           
+      <div className="input-box">
+      <input className="lastName" name="lastName" type="text" placeholder="LastName" required/>
+      </div>
+           
+      <div className="input-box">
+      <input className="studentNumber" name="studentNumber" type="text" placeholder="StudentNumber"required/>
+      </div>
+           
+      <button className="btn" formAction={signup}>Sign up</button>
     </form>
+
+   </div>
+   </body>
   )
 }
