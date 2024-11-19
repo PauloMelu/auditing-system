@@ -9,8 +9,30 @@
     font-size: 45px;
 }
 
-.orgs{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 40px;
+.side-bar{
+    position: relative;
+    background-color: rgb(236, 176, 63);
+    top: 0;
+    width: 225px;
+    float: right;
+    height: 641px;
+}
+
+li{
+    list-style: none;
+}
+
+.side-bar li{
+    position: relative;
+    font-size: 23px; 
+    padding: 10px 75px;
+    top: 20px;
+    display: flex;   
+    align-items: right;
+    transition: 0.2s;
+}
+
+.side-bar li:hover{
+    background: bisque;
+    color: rgb(236, 176, 63);
 }

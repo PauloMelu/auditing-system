@@ -29,6 +29,16 @@ export default async function home() {
 
   return (
     <body>
+      <div className='side-bar'>
+        <div className='create-cont'>
+          <ul>
+            <li><Link href="/home/create">Create</Link></li>
+            <li><Link href="/home/join">Join</Link></li>
+            <li><button onClick={signOut}>Signout</button></li>
+          </ul>
+        </div>
+      </div>
+
       <div className='hello'>
         <h1>Hello {user.user_metadata.firstName} {user.user_metadata.lastName}.</h1>
 
@@ -41,13 +51,6 @@ export default async function home() {
         </div>
       </div>
       ))}
-
-      <br />
-      <Link href="/home/create">Create</Link>
-      <br />
-      <Link href="/home/join">Join</Link>
-      <br />
-      <button onClick={signOut}>Signout</button>
     </div>
     </body>
   )
