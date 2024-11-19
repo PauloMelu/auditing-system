@@ -46,7 +46,7 @@ export default async function home() {
       <div className='orgs'>
         <div className='cards'>
           <div key = {userOrg.orgId}>
-            <Link href={`/organization/${userOrg.orgId}`}>{userOrg.OrganizationsTbl.orgName}</Link>
+            <Link href={`/organization/${userOrg.OrganizationsTbl.orgName}`}>{userOrg.OrganizationsTbl.orgName}</Link>
           </div>
         </div>
       </div>
