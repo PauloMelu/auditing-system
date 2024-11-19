@@ -7,10 +7,10 @@ import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 import './style.css'
 
-export default async function home() {  
+export default async function home() {
 
   const user = await getUser()
-  
+
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
   const { data: userOrgs, error } = await supabase.from("OrganizationMembersTbl")
