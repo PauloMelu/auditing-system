@@ -25,8 +25,6 @@ export default async function home() {
 console.log(userOrgs)
 
   return (
-
-
     <body>
       <nav className='nav'>
         <div className='create'>
@@ -46,14 +44,14 @@ console.log(userOrgs)
       {userOrgs.map(userOrg => (
       <div className='orgs' key={userOrg.orgId}>
         <div className='cards'>
-            <Link href={`/organization/${userOrg.orgId}`}>
+            <Link href={`/organization/${userOrg.OrganizationsTbl.orgName}`}>
             {userOrg.OrganizationsTbl.orgName}
             </Link>
         </div>
       </div>
       ))}
     </div>
-    </div>
+    </body>
   )
 }
 
