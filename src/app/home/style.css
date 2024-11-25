@@ -3,36 +3,67 @@
 }
 
 .hello{
-    padding: 15px;
+    padding: 30px;
 }
 .hello h1{
-    font-size: 45px;
+    font-size: 350%;
+    font-weight: bold;
 }
 
-.side-bar{
+.orgs .cards {
+    display: grid;
+    background-color: rgb(236, 176, 63); 
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 90lvw;
+    height: 13lvh;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+  
+.orgs .cards:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+}
+  
+.orgs .cards a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.nav{
     position: relative;
-    background-color: rgb(236, 176, 63);
-    top: 0;
-    width: 225px;
+    display: flex;
+    overflow: hidden;
     float: right;
-    height: 641px;
+    width: 50lvw;
+    margin-top: 30px;
+    height: 20lvh;
 }
 
-li{
-    list-style: none;
+.create{
+    padding: 20px;
+    margin-top: 1px;
+    margin-left: 30%;
 }
 
-.side-bar li{
-    position: relative;
-    font-size: 23px; 
-    padding: 10px 75px;
-    top: 20px;
-    display: flex;   
-    align-items: right;
-    transition: 0.2s;
+.create .btn{
+    margin: 5px;
+    width: 130px;
+    height: 40px;
+    font-weight: 500;
+    background-color: rgb(236, 176, 63);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
 }
 
-.side-bar li:hover{
+.btn:hover{
     background: bisque;
-    color: rgb(236, 176, 63);
 }
