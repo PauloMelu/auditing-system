@@ -6,10 +6,12 @@ import { joinOrg } from '@/actions/org-actions'
 import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 import './style.css'
+import { UsersTbl } from '@/types/types'
 
 export default async function home() {
 
   const user = await getUser()
+  console.log("test", user, "asdasd")
 
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
@@ -19,7 +21,7 @@ export default async function home() {
     OrganizationsTbl(
     orgName
     )
-  `).eq("userId", user.id).returns<{orgId: number, OrganizationsTbl: {orgName: string}}[]>()
+  `).eq("userId", user.userId).returns<{orgId: number, OrganizationsTbl: {orgName: string}}[]>()
    
 console.log(userOrgs)
 
@@ -36,7 +38,7 @@ console.log(userOrgs)
       </div>
 
       <div className='hello'>
-        <h1>Hello {user.user_metadata.firstName} {user.user_metadata.lastName}.</h1>
+        <h1>Hello {user.firstName} {user.lastName}.</h1>
 
       {userOrgs.map(userOrg => (
       <div className='orgs'>

@@ -1,15 +1,19 @@
 
+import { UsersTbl } from "@/types/types"
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
 
 
-export async function getUser(){
+export async function getUser(): Promise<UsersTbl>{
     const supabase = await createClient()
     const { data, error} = await supabase.auth.getUser()
-    if (error || !data?.user) {
-
-        redirect('/')
-      }
     
-    return data.user
+    
+    const {data: userData, error: selectError} = await supabase.from("UsersTbl").select().eq("userId", data.user.id).returns<UsersTbl>().single()
+    console.log("asdasdasdas", userData, "done")
+
+    if (selectError || !data?.user) {
+      redirect('/')
+    }
+    return userData
 }

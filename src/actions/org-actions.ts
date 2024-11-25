@@ -73,7 +73,7 @@ async function createMember(orgId: number, userType: string){
     //create new member
     const {error} = await supabase.from("OrganizationMembersTbl").insert({
         orgId: orgId,
-        userId: user.id,
+        userId: user.userId,
         userType: userType
     });
 

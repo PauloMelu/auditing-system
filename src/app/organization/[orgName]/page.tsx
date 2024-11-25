@@ -20,26 +20,25 @@ const Homepage = async ({ params, }: { params: Promise<{ orgName: string }> }) =
   const supabase = await createClient()
   const user = await getUser()
 
+  //get orgid
   const { data: { orgId }, error: selectOrgError } = await supabase.from("OrganizationsTbl").select('orgId').eq("orgName", orgName).returns<{ orgId: number }[]>().single()
   console.log("asdasdasdasd ", orgId, orgName)
 
-
+  //get money and user type
   const { data: { userType, money }, error } = await supabase.from("OrganizationMembersTbl").select('userType, money')
     .eq("orgId", orgId)
-    .eq("userId", user.id).returns<{ userType: string, money: number }[]>().single()
+    .eq("userId", user.userId).returns<{ userType: string, money: number }[]>().single()
   
   console.log(money, userType)
 
-  const events = await getEvents(orgId)
 
-  console.log(events)
 
   return (
     <div>
       {userType == "auditor" ? (
         <Auditor orgName={orgName} />
       ) : (
-        <Member orgName={orgName} />
+        <Member orgName={orgName} orgId={orgId} money={money}/>
       )
       }
     </div>
