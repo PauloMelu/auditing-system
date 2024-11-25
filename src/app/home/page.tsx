@@ -16,19 +16,15 @@ export default async function home() {
   const { data: userOrgs, error } = await supabase.from("OrganizationMembersTbl")
     .select(`
     orgId,
-    userId,
-    userType,
-    money,
     OrganizationsTbl(
-    orgName,
-    orgPassword
+    orgName
     )
-  `).eq("userId", user.id)
-
-
+  `).eq("userId", user.id).returns<{orgId: number, OrganizationsTbl: {orgName: string}}[]>()
+   
+console.log(userOrgs)
 
   return (
-    <body>
+    <div>
       <div className='side-bar'>
         <div className='create-cont'>
           <ul>
@@ -52,7 +48,7 @@ export default async function home() {
       </div>
       ))}
     </div>
-    </body>
+    </div>
   )
 }
 
