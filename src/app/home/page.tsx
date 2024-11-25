@@ -6,28 +6,27 @@ import { joinOrg } from '@/actions/org-actions'
 import Link from 'next/link'
 import { getUser } from '@/actions/get-user'
 import './style.css'
+import { UsersTbl } from '@/types/types'
 
 export default async function home() {  
 
   const user = await getUser()
-  
+
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
   const { data: userOrgs, error } = await supabase.from("OrganizationMembersTbl")
     .select(`
     orgId,
-    userId,
-    userType,
-    money,
     OrganizationsTbl(
-    orgName,
-    orgPassword
+    orgName
     )
-  `).eq("userId", user.id)
-
-
+  `).eq("userId", user.userId).returns<{orgId: number, OrganizationsTbl: {orgName: string}}[]>()
+   
+console.log(userOrgs)
 
   return (
+
+
     <body>
       <nav className='nav'>
         <div className='create'>
@@ -42,7 +41,7 @@ export default async function home() {
       </nav>
       
       <div className='hello'>
-        <h1>Hello {user.user_metadata.firstName} {user.user_metadata.lastName}.</h1>
+        <h1>Hello {user.firstName} {user.lastName}.</h1>
 
       {userOrgs.map(userOrg => (
       <div className='orgs' key={userOrg.orgId}>
@@ -54,7 +53,7 @@ export default async function home() {
       </div>
       ))}
     </div>
-    </body>
+    </div>
   )
 }
 

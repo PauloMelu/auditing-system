@@ -10,3 +10,11 @@ export type OrganizationMembersTbl = {
     userType: string,
     money: number
 }
+
+export type UsersTbl = {
+    userId: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    studentNumber: string
+}
