@@ -8,10 +8,9 @@ import { getUser } from '@/actions/get-user'
 import './style.css'
 import { UsersTbl } from '@/types/types'
 
-export default async function home() {
+export default async function home() {  
 
   const user = await getUser()
-  console.log("test", user, "asdasd")
 
   //get all organizations that the user is already joined in; data are from OrganizationMembersTbl and OrganizationsTbl for the orgName
   const supabase = await createClient()
@@ -26,26 +25,30 @@ export default async function home() {
 console.log(userOrgs)
 
   return (
-    <div>
-      <div className='side-bar'>
-        <div className='create-cont'>
-          <ul>
-            <li><Link href="/home/create">Create</Link></li>
-            <li><Link href="/home/join">Join</Link></li>
-            <li><button onClick={signOut}>Signout</button></li>
-          </ul>
-        </div>
-      </div>
 
+
+    <body>
+      <nav className='nav'>
+        <div className='create'>
+          <a href="/home/create">
+            <button className='btn'>Create</button>&nbsp;
+          </a>
+          <a href="/home/join">
+            <button className='btn'>Join</button>&nbsp;
+          </a>
+          <button onClick={signOut} className='btn'>Signout</button>
+        </div>
+      </nav>
+      
       <div className='hello'>
         <h1>Hello {user.firstName} {user.lastName}.</h1>
 
       {userOrgs.map(userOrg => (
-      <div className='orgs'>
+      <div className='orgs' key={userOrg.orgId}>
         <div className='cards'>
-          <div key = {userOrg.orgId}>
-            <Link href={`/organization/${userOrg.OrganizationsTbl.orgName}`}>{userOrg.OrganizationsTbl.orgName}</Link>
-          </div>
+            <Link href={`/organization/${userOrg.orgId}`}>
+            {userOrg.OrganizationsTbl.orgName}
+            </Link>
         </div>
       </div>
       ))}
