@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getUser } from "./get-user";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { OrganizationsTbl } from "@/types/types";
 
 
 export async function joinOrg(formData: FormData) {
@@ -12,21 +13,24 @@ export async function joinOrg(formData: FormData) {
     const orgPassword = formData.get('orgPassword') as string
     const orgName = formData.get('orgName') as string
 
-    //testing kung nagana
     //check if org exists
-    const {data: orgData, error: selectOrgError } = await supabase.from("OrganizationsTbl").select().eq("orgName", orgName).single()
+    const {data: orgData, error: selectOrgError } = await supabase.from("OrganizationsTbl")
+    .select()
+    .eq("orgName", orgName)
+    .returns<OrganizationsTbl[]>()
+    .single()
+
     console.log(orgData, orgPassword)
 
     //if doesn't exist, go to error
     if(selectOrgError){
         redirect('/error')
-        
     }
 
     //if exist, check password
     if(orgData.orgPassword == orgPassword){
         //if password correct, create member then go home
-        createMember(orgData.orgId, "member")
+        createMember(orgData.orgName, "member")
         redirect('/home') 
     }
     //else, go to error
@@ -34,13 +38,10 @@ export async function joinOrg(formData: FormData) {
 }
 
 
-
-
-
 export async function createOrg(formData: FormData) {
     const supabase = await createClient()
 
-    const orgName = formData.get('orgName')
+    const orgName = formData.get('orgName') as string
 
     //insert to orgs table
     const {error} = await supabase.from("OrganizationsTbl").insert({
@@ -53,12 +54,8 @@ export async function createOrg(formData: FormData) {
         redirect('/error')
     }
 
-    //get data of the recently inserted org
-    const {data: insertedOrg, error: getOrgIdError} = await supabase.from("OrganizationsTbl").select('orgId').eq("orgName", orgName).single()
-    
     //create a member for the recently inserted org with the title auditor
-    createMember(insertedOrg.orgId, "auditor")
-    console.log(insertedOrg.orgId)
+    createMember(orgName, "auditor")
 
     //go home
     revalidatePath('/', 'layout')
@@ -66,13 +63,13 @@ export async function createOrg(formData: FormData) {
 
 }
 
-async function createMember(orgId: number, userType: string){
+async function createMember(orgName: string, userType: string){
     const supabase = await createClient()
     const user = await getUser()
 
     //create new member
     const {error} = await supabase.from("OrganizationMembersTbl").insert({
-        orgId: orgId,
+        orgName: orgName,
         userId: user.userId,
         userType: userType
     });

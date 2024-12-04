@@ -1,6 +1,6 @@
 type Props = {orgName: string}
 
-export default function Auditor({...props}: Props) {
+export default function OrgAuditor({...props}: Props) {
     console.log(props.orgName)
     return (
     <div>

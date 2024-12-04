@@ -1,9 +1,4 @@
 
-import Image from "next/image";
-import { signOut } from "./(auth)/actions";
-import { Button } from "@/components/ui/button";
-import { joinOrg } from "@/actions/org-actions";
-import Link from "next/link";
 import './style.css'
 //hi
 //testing
