@@ -1,6 +1,6 @@
-import GetReceipts from "@/actions/receipt-actions/get-receipts"
+import { getReceipts } from "@/actions/receipt-actions/get-receipts"
 import RemoveReceipt from "@/actions/receipt-actions/remove-receipt"
-import { UploadReceipt } from "@/actions/receipt-actions/upload-receipt"
+import { uploadReceipt } from "@/actions/receipt-actions/upload-receipt"
 import { Button } from "@/components/ui/button"
 import { OrganizationMembersTbl } from "@/types/types"
 import { CircleMinus } from "lucide-react"
@@ -12,8 +12,8 @@ export default async function EventMember({ ...props }: Props) {
     const orgName = props.orgMember.orgName
     const eventName = props.eventName
 
-    const verifiedReceipts = await GetReceipts(userId, orgName, eventName, true)
-    const unverifiedReceipts = await GetReceipts(userId, orgName, eventName, false)
+    const verifiedReceipts = await getReceipts(orgName, eventName, userId, true)
+    const unverifiedReceipts = await getReceipts(orgName, eventName, userId, false)
     console.log(verifiedReceipts, " - ", unverifiedReceipts)
     return (
         <div>
@@ -28,14 +28,14 @@ export default async function EventMember({ ...props }: Props) {
                 <input name="orgName" type="hidden" value={orgName} />
                 <input name="userId" type="hidden" value={userId} />
                 <input name="eventName" type="hidden" value={eventName} />
-                <Button variant="outline" formAction={UploadReceipt}>Upload</Button>
+                <Button variant="outline" formAction={uploadReceipt}>Upload</Button>
             </form>
 
             <h1>Pending for Verification:</h1>
             {unverifiedReceipts.map(receipt => (
                 <div key={receipt.id}>
                     <form>
-                        {receipt.date.toString()} {receipt.ORNumber} {receipt.amount} {receipt.category}
+                        {receipt.date.toString()} - {receipt.ORNumber} - {receipt.amount} - {receipt.category}
 
                         <input name="receiptId" type="hidden" value={receipt.id} />
                         <Button variant="destructive" size="icon" formAction={RemoveReceipt}>
@@ -48,7 +48,7 @@ export default async function EventMember({ ...props }: Props) {
             <h1>Verified:</h1>
             {verifiedReceipts.map(receipt => (
                 <div key={receipt.id}>
-                    {receipt.date.toString()} {receipt.ORNumber} {receipt.amount} {receipt.category}
+                    {receipt.date.toString()} - {receipt.ORNumber} - {receipt.amount} - {receipt.category}
                 </div>
             ))}
         </div>

@@ -3,7 +3,7 @@ import EventAuditor from "./event-auditor"
 import EventMember from "./event-member"
 import { getUser } from "@/actions/get-user"
 import { createClient } from "@/utils/supabase/server"
-import { getOrgMember } from "@/actions/get-org-member"
+import { getOrgMember } from "@/actions/org-member-actions/get-org-member"
 
 
 export default async function Event({ params, }: { params: Promise<{ orgName: string, eventName: string }> }) {
@@ -26,7 +26,7 @@ export default async function Event({ params, }: { params: Promise<{ orgName: st
         <div>
             
             {orgMember.userType == "auditor" ? (
-                <EventAuditor />
+                <EventAuditor orgMember={orgMember} eventName={eventName}/>
             ) : (
                 <EventMember orgMember={orgMember} eventName={eventName}/>
             )

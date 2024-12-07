@@ -7,8 +7,7 @@ import { getUser } from '@/actions/get-user'
 import './style.css'
 import { OrganizationMembersTbl, UsersTbl } from '@/types/types'
 
-export default async function home() {  
-
+export default async function home() {
   const user = await getUser()
 
   //get all organizations that the user is already joined in
@@ -17,8 +16,9 @@ export default async function home() {
     .select()
     .eq("userId", user.userId)
     .returns<OrganizationMembersTbl[]>()
-   
-console.log(userOrgs)
+
+  //sort alphabetically
+  userOrgs.sort((a, b) => a.orgName.localeCompare(b.orgName))
 
   return (
     <body>
@@ -33,20 +33,20 @@ console.log(userOrgs)
           <button onClick={signOut} className='btn'>Signout</button>
         </div>
       </nav>
-      
+
       <div className='hello'>
         <h1>Hello {user.firstName} {user.lastName}.</h1>
 
-      {userOrgs.map(userOrg => (
-      <div className='orgs' key={userOrg.orgName}>
-        <div className='cards'>
-            <Link href={`/organization/${userOrg.orgName}`}>
-            {userOrg.orgName}
-            </Link>
-        </div>
+        {userOrgs.map(userOrg => (
+          <div className='orgs' key={userOrg.orgName}>
+            <div className='cards'>
+              <Link href={`/organization/${userOrg.orgName}`}>
+                {userOrg.orgName}
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
-      ))}
-    </div>
     </body>
   )
 }

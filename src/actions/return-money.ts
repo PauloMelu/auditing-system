@@ -1,17 +1,19 @@
 'use server'
 import { createClient } from "@/utils/supabase/server";
 import { getUser } from "./get-user";
-import { getOrgMember } from "./get-org-member";
+import { getOrgMember } from "./org-member-actions/get-org-member";
 import { OrganizationMembersTbl } from "@/types/types";
 import { isNull } from "util";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { updateOrgMember } from "./org-member-actions/update-org-member";
+
 
 export async function returnMoney(formData: FormData) {
     const user = await getUser()
     const supabase = await createClient()
 
-    const auditorId = formData.get('auditorId') as string
+    const receiverId = formData.get('receiverId') as string
     let amount = parseFloat(formData.get('amount') as string)
 
     if (Number.isNaN(amount))
@@ -20,18 +22,20 @@ export async function returnMoney(formData: FormData) {
     const orgName = formData.get('orgName') as string
 
 
-    let auditorData = await getOrgMember(orgName, auditorId)
-    let memberData = await getOrgMember(orgName, user.userId)
+    let receiverData = await getOrgMember(orgName, receiverId)
+    let senderData = await getOrgMember(orgName, user.userId)
 
-    if (isNull(auditorData)) {
-        auditorData = {
+    console.log("receiver and sender: ", receiverData, senderData)
+
+    if (isNull(receiverData)) {
+        receiverData = {
             orgName: null,
             userId: null,
             userType: null,
             money: 0
         }
 
-        memberData = {
+        senderData = {
             orgName: null,
             userId: null,
             userType: null,
@@ -39,24 +43,17 @@ export async function returnMoney(formData: FormData) {
         }
     }
 
-    auditorData.money += amount
-    memberData.money -= amount
+    receiverData.money += amount
+    senderData.money -= amount
 
-    console.log(auditorData, memberData)
+    console.log("receiver and sender: ", receiverData, senderData)
 
-    update(auditorData, orgName, auditorId)
-    update(memberData, orgName, user.userId)
+    updateOrgMember(receiverData, orgName, receiverId)
+    updateOrgMember(senderData, orgName, user.userId)
 
     console.log(amount)
-    console.log(auditorId)
+    console.log(receiverId)
 
     revalidatePath('/', "layout")
 }
 
-async function update(data: OrganizationMembersTbl, orgName: string, userId: string) {
-    const supabase = await createClient()
-    const error = await supabase.from("OrganizationMembersTbl")
-        .update(data)
-        .eq("orgName", orgName)
-        .eq("userId", userId)
-}
