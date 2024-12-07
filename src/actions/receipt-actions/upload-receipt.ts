@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache"
 
 
 
-export async function UploadReceipt(formData: FormData) {
+export async function uploadReceipt(formData: FormData) {
     const supabase = await createClient()
     let data: ReceiptsTbl = {} as ReceiptsTbl
 

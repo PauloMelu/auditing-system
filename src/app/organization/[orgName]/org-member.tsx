@@ -1,6 +1,8 @@
 
+import { getEvents } from "@/actions/event-actions/get-event";
 import { getAuditors } from "@/actions/get-auditors";
-import { getEvents } from "@/actions/get-events"
+import { getName } from "@/actions/get-name";
+
 
 import { returnMoney } from "@/actions/return-money";
 import { Button } from "@/components/ui/button";
@@ -19,29 +21,40 @@ export default async function OrgMember({ ...props }: Props) {
 
   const events = await getEvents(orgMember.orgName);
   console.log(events)
+  events.sort((a, b) => a.eventName.localeCompare(b.eventName))
 
   const auditors = await getAuditors(orgMember.orgName)
-  console.log(auditors)
+  console.log("raw auditors", auditors)
 
+  //add the name of the auditor
+  await Promise.all(
+    auditors.map(async auditor => {
+      auditor.firstName = (await getName(auditor.userId)).firstName
+      auditor.lastName = (await getName(auditor.userId)).lastName
+    })
+  )
+
+  auditors.sort((a, b) => a.lastName.localeCompare(b.lastName))
 
   return (
     <div>
-      member {orgMember.orgName}
+      {orgMember.orgName} - {orgMember.userType}
       <br />
       Money: {orgMember.money}
       <br />
 
       <form>
         <input name="orgName" type="hidden" value={orgMember.orgName} />
+
         <input name="amount" type="number" placeholder="Amount" />
-        <Select name="auditorId">
+        <Select name="receiverId">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Select auditor" />
           </SelectTrigger>
           <SelectContent>
             {auditors.map(auditor => (
               <SelectItem key={auditor.userId} value={auditor.userId}>
-                {auditor.UsersTbl.firstName} {auditor.UsersTbl.lastName}
+                {auditor.lastName}, {auditor.firstName}
               </SelectItem>
             ))}
           </SelectContent>
@@ -51,7 +64,7 @@ export default async function OrgMember({ ...props }: Props) {
 
       <br />
       {events.map(event => (
-        <div key={event.eventId}>
+        <div key={event.eventName}>
           <Link href={`/organization/${orgMember.orgName}/${event.eventName}`} >
             {event.eventName}
           </Link>

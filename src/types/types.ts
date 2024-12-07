@@ -7,7 +7,9 @@ export type OrganizationMembersTbl = {
     orgName: string,
     userId: string,
     userType: string,
-    money: number
+    money: number,
+    firstName?: string,
+    lastName?: string
 }
 
 export type UsersTbl = {
@@ -28,4 +30,12 @@ export type ReceiptsTbl = {
     amount: number,
     category: string,
     verified: boolean
+}
+
+export type EventsTbl = {
+    orgName: string,
+    eventName: string,
+    budget: number,
+    active: boolean,
+    budgetTaken: boolean
 }

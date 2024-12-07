@@ -7,7 +7,6 @@ import { redirect } from "next/navigation"
 export async function getUser(): Promise<UsersTbl>{
     const supabase = await createClient()
     const { data, error} = await supabase.auth.getUser()
-
     
     const {data: userData, error: selectError} = await supabase.from("UsersTbl")
     .select()
@@ -15,9 +14,5 @@ export async function getUser(): Promise<UsersTbl>{
     .returns<UsersTbl[]>()
     .single()
 
-
-    if (selectError || !data?.user) {
-      redirect('/')
-    }
     return userData
 }

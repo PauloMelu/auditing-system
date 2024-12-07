@@ -1,4 +1,4 @@
-import { getEvents } from "@/actions/get-events"
+
 import { getUser } from "@/actions/get-user"
 import { createClient } from "@/utils/supabase/server"
 import { redirect } from "next/navigation"
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { Divide } from "lucide-react"
 import OrgMember from "./org-member"
 import OrgAuditor from "./org-auditor"
-import { getOrgMember } from "@/actions/get-org-member"
+import { getOrgMember } from "@/actions/org-member-actions/get-org-member"
 
 
 
@@ -27,7 +27,7 @@ const organization = async ({ params, }: { params: Promise<{ orgName: string }> 
   return (
     <div>
       {orgMember.userType == "auditor" ? (
-        <OrgAuditor orgName={orgName} />
+        <OrgAuditor orgMember={orgMember} />
       ) : (
         <OrgMember orgMember={orgMember} />
       )
