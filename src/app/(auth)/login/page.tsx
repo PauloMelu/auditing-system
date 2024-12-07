@@ -1,4 +1,4 @@
-import { login, signup } from "../actions"
+import { login } from "../actions"
 import './style.css'
 export default function LoginPage() {
   return (
