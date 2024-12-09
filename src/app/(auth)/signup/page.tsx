@@ -2,7 +2,7 @@ import { login, signup } from "../actions"
 import './style.css'
 export default function SignupPage() {
   return (
-   <body>
+
     
     <div className="wrapper">
      <form>
@@ -31,6 +31,6 @@ export default function SignupPage() {
     </form>
 
    </div>
-   </body>
+
   )
 }
