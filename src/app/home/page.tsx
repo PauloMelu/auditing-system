@@ -40,7 +40,7 @@ export default async function home() {
         {userOrgs.map(userOrg => (
           <div className='orgs' key={userOrg.orgName}>
             <div className='cards'>
-              <Link href={`/organization/${userOrg.orgName}`}>
+              <Link href={`/home/${userOrg.orgName}`}>
                 {userOrg.orgName}
               </Link>
             </div>

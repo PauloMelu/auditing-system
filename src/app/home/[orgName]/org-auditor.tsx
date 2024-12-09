@@ -50,7 +50,7 @@ export default async function OrgAuditor({ ...props }: Props) {
         <div key={event.eventName}>
           <form>
             <Button variant="link">
-              <Link href={`/organization/${orgMember.orgName}/${event.eventName}`} >
+              <Link href={`./${orgMember.orgName}/${event.eventName}`} >
                 {event.eventName}
               </Link>
             </Button>

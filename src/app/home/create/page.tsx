@@ -1,20 +1,23 @@
 import { createOrg } from "@/actions/org-actions";
-
+import './style.css'
 
 export default async function create() {
     return (
-        <div>
+        <body>
+            
+        
+        <div className="wrapper">
+        <h1>Create Organization</h1>
             <form>
-                <label htmlFor="orgname">Organization Name:</label>
-                <input id="orgName" name="orgName" type="text" required />
-
-                <label htmlFor="password">Password:</label>
-                <input id="password" name="password" type="text" required />
+                
+                <input  id="orgName" name="orgName" type="text" placeholder="Organization Name" required />
+                <input  id="password" name="password" type="text" placeholder="Password" required />
 
 
-                <button formAction={createOrg}>Create Org</button>
+                <button className="btn" formAction={createOrg}>Create Org</button>
             </form>
 
         </div>
+        </body>
     )
 };
