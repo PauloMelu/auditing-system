@@ -1,18 +1,20 @@
 import { joinOrg } from "@/actions/org-actions";
 import { Button } from "@/components/ui/button";
-
+import './style.css'
 
 export default async function join() {
   return (
-<div>
+    <body>
+      <div className="wrapper">
+        <h1>Join Organization</h1>
+        <form>
 
-    <form>
-        
-        <input id="orgName" name="orgName" type="text" placeholder="org name" required/>
-        <input id="orgPassword" name="orgPassword" type="password" placeholder="org password" required/>
-        <Button formAction={joinOrg}>Join Org</Button>
-    </form>
+          <input id="orgName" name="orgName" type="text" placeholder="Organization Name" required />
+          <input id="orgPassword" name="orgPassword" type="password" placeholder="Password" required />
+          <button className="btn" formAction={joinOrg}>Join Org</button>
+        </form>
 
-    </div>
+      </div>
+    </body>
   )
 };

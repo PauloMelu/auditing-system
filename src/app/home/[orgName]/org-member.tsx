@@ -65,7 +65,7 @@ export default async function OrgMember({ ...props }: Props) {
       <br />
       {events.map(event => (
         <div key={event.eventName}>
-          <Link href={`/organization/${orgMember.orgName}/${event.eventName}`} >
+          <Link href={`./${orgMember.orgName}/${event.eventName}`} >
             {event.eventName}
           </Link>
         </div>

@@ -6,6 +6,7 @@ export async function middleware(request: NextRequest) {
     const supabase = await createClient()
     const { data, error} = await supabase.auth.getUser()
     console.log("triggered by: ", request.nextUrl.pathname)
+    console.log(error)
     if (error || !data?.user) {
         return NextResponse.redirect('http://localhost:3000/')
     }
