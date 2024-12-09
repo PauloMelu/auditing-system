@@ -21,7 +21,7 @@ export default async function home() {
   userOrgs.sort((a, b) => a.orgName.localeCompare(b.orgName))
 
   return (
-    <body>
+    <div>
       <nav className='nav'>
         <div className='create'>
           <a href="/home/create">
@@ -47,7 +47,7 @@ export default async function home() {
           </div>
         ))}
       </div>
-    </body>
+    </div>
   )
 }
 
