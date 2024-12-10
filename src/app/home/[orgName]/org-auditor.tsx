@@ -24,6 +24,7 @@ export default async function OrgAuditor({ ...props }: Props) {
   return (
     <div>
       <header className="dashboard">
+        <h1><a href="/home"><u>Home</u></a></h1>
         <h1>Dashboard </h1>
         <h1>User: {orgMember.userType}</h1>
       </header>
@@ -31,11 +32,12 @@ export default async function OrgAuditor({ ...props }: Props) {
 
       <div className="sidebar">
         <h1>
-          Money: {orgMember.money}php
+          <span>Money: {orgMember.money}php</span>
+        
           <a href={`./${orgMember.orgName}/members`}>
-            <Button variant="link">
+            <u>
               Members List
-            </Button>
+            </u>
           </a>
         </h1>
         <center>
