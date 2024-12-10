@@ -4,7 +4,6 @@ import './style.css'
 
 export default async function join() {
   return (
-    <body>
       <div className="wrapper">
         <h1>Join Organization</h1>
         <form>
@@ -14,7 +13,12 @@ export default async function join() {
           <button className="btn" formAction={joinOrg}>Join Org</button>
         </form>
 
+        <a href="./">
+          <button className="btn">
+            Back
+          </button>
+        </a>
+
       </div>
-    </body>
   )
 };
