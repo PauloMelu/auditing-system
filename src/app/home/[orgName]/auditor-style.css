@@ -1,0 +1,88 @@
+.dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: black;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.sidebar {
+    width: 30%;
+    height: auto;
+    position: absolute;
+    right: 0;
+    margin: 2%;
+    margin-right: 10%;
+    
+    background-color: rgb(236, 176, 63);
+    color: black;
+    padding: 2%;
+    border-radius: 10px;
+}
+
+.sidebar h1 {
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+    font-size:100%;
+}
+
+.sidebar span {
+    margin-right: 20%;
+}
+
+.sidebar button {
+    margin-left: 15%;
+    font-weight: bold;
+}
+
+.sidebar form button {
+    margin-left: 0;
+}
+
+.sidebar input {
+    width: 80%;
+   border: 2px solid black;
+   border-radius: 40px;
+   padding: 3%;
+    margin: 4%;
+}
+
+
+
+
+/*   events list   */
+
+.events-wrapper {
+    width: 46%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    margin: 2%;
+    margin-left: 10%;
+    
+    background-color: rgb(236, 176, 63);
+    color: black;
+    padding: 2%;
+    border-radius: 10px;
+}
+
+#events {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10%;
+}
+
+#events div {
+    width: 30%;
+    height: auto;
+    margin-top: 2%;
+}
