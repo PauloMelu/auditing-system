@@ -10,6 +10,7 @@ import { OrganizationMembersTbl } from "@/types/types";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import './member-style.css'
+import capitalize from "@/actions/capitalize";
 
 
 type Props = { orgMember: OrganizationMembersTbl }
@@ -38,15 +39,16 @@ export default async function OrgMember({ ...props }: Props) {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
+        <h1><a href="/home"><u>Home</u></a></h1>
         <h1>Dashboard</h1>
-        <span>User: {orgMember.userType.toUpperCase()}</span>
+        <h1>User: {capitalize(orgMember.userType)}</h1>
       </header>
 
       <div className="dashboard-content">
         <div className="card">
           <h2>Organization: {orgMember.orgName}</h2>
-          <p>Role: {orgMember.userType}</p>
-          <p>Balance: {orgMember.money}</p>
+          <p>Role: {capitalize(orgMember.userType)}</p>
+          <p>Balance: ₱ {orgMember.money}</p>
         </div>
 
         <div className="form-container">

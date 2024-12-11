@@ -4,6 +4,8 @@ import { uploadReceipt } from "@/actions/receipt-actions/upload-receipt"
 import { Button } from "@/components/ui/button"
 import { OrganizationMembersTbl } from "@/types/types"
 import { CircleMinus } from "lucide-react"
+import "./member-style.css"
+import capitalize from "@/actions/capitalize"
 
 type Props = { orgMember: OrganizationMembersTbl, eventName: string }
 
@@ -17,40 +19,76 @@ export default async function EventMember({ ...props }: Props) {
     console.log(verifiedReceipts, " - ", unverifiedReceipts)
     return (
         <div>
-            {props.eventName} {props.orgMember.orgName}<br />
+            <div id="receipt">
+            <div><h1><a href="./"><u>Back</u></a></h1></div>
+            <div><h1>{props.orgMember.orgName} - {capitalize(props.eventName)}</h1></div>
+            <div></div>
+            </div>
 
-            event-member <br />
             <form>
-                <input type="text" name="ORNumber" placeholder="ORNumber" required />
-                <input type="number" name="amount" placeholder="Amount" required />
-                <input type="text" name="category" placeholder="Category" required />
+                <div className="sidebar">
+                    <center>
+                        <h1>Upload Receipt</h1>
+                        <input type="text" name="ORNumber" placeholder="ORNumber" required />
+                        <input type="number" name="amount" placeholder="Amount" required />
+                        <input type="text" name="category" placeholder="Category" required />
 
-                <input name="orgName" type="hidden" value={orgName} />
-                <input name="userId" type="hidden" value={userId} />
-                <input name="eventName" type="hidden" value={eventName} />
-                <Button variant="outline" formAction={uploadReceipt}>Upload</Button>
+                        <input name="orgName" type="hidden" value={orgName} />
+                        <input name="userId" type="hidden" value={userId} />
+                        <input name="eventName" type="hidden" value={eventName} />
+
+                        <Button variant="outline" formAction={uploadReceipt}>Upload</Button>
+                    </center>
+                </div>
             </form>
 
-            <h1>Pending for Verification:</h1>
-            {unverifiedReceipts.map(receipt => (
-                <div key={receipt.id}>
-                    <form>
-                        {receipt.date.toString()} - {receipt.ORNumber} - {receipt.amount} - {receipt.category}
-
-                        <input name="receiptId" type="hidden" value={receipt.id} />
-                        <Button variant="destructive" size="icon" formAction={RemoveReceipt}>
-                            <CircleMinus />
-                        </Button>
-                    </form>
+            <div className="receipt-wrapper">
+                <h1>Pending for Verification:</h1>
+                <div id="receipt">
+                    <div>Date:</div>
+                    <div>OR-Number:</div>
+                    <div>Amount:</div>
+                    <div>Category:</div>
+                    <div className="end"></div>
                 </div>
-            ))}
+                {unverifiedReceipts.map(receipt => (
+                    <div key={receipt.id}>
+                        <form>
+                            <div id="receipt">
+                                <div>{new Date(receipt.date).toDateString()}</div>
+                                <div>{receipt.ORNumber}</div>
+                                <div>₱{receipt.amount}</div>
+                                <div>{receipt.category}</div>
 
-            <h1>Verified:</h1>
-            {verifiedReceipts.map(receipt => (
-                <div key={receipt.id}>
-                    {receipt.date.toString()} - {receipt.ORNumber} - {receipt.amount} - {receipt.category}
+                                <input name="receiptId" type="hidden" value={receipt.id} />
+                                <div className="end">
+                                    <Button variant="destructive" size="icon" formAction={RemoveReceipt}>
+                                        <CircleMinus />
+                                    </Button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                ))}
+
+                <h1>Verified:</h1>
+                <div id="receipt">
+                    <div>Date:</div>
+                    <div>OR-Number:</div>
+                    <div>Amount:</div>
+                    <div>Category:</div>
+                    <div className="end"></div>
                 </div>
-            ))}
+                {verifiedReceipts.map(receipt => (
+                    <div key={receipt.id} id="receipt">
+                        <div>{new Date(receipt.date).toDateString()}</div>
+                        <div>{receipt.ORNumber}</div>
+                        <div>{receipt.amount}</div>
+                        <div>{receipt.category}</div>
+                        <div className="end"></div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 };
