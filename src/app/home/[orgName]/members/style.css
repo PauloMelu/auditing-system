@@ -1,0 +1,55 @@
+.hello h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+    margin: 1%;
+}
+
+.wrapper {
+    width: 80%;
+    height: auto;
+    position: absolute;
+    margin: 2% 10% 2% 10%;
+    background-color: rgb(236, 176, 63);
+    color: black;
+    padding: 2%;
+    border-radius: 10px;
+}
+
+.wrapper p {
+    font-weight: bold;
+    font-size: medium;
+}
+
+#member {
+    display: flex;
+    justify-content: space-between;
+}
+
+#member div {
+    width: 30%;
+    height: auto;
+    margin-top: 2%;
+}
+
+#member .btn {
+    margin-left: 5%;
+    background-color: rgb(252, 252, 252);
+    color: black;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#member .btn:hover {
+    background: rgb(255, 255, 255, 0.4);
+}
+
+#member input {
+    width: 80%;
+   border: 1px solid black;
+   border-radius: 40px;
+   padding: 3%;
+
+}

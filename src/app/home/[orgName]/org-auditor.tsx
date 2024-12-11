@@ -9,6 +9,7 @@ import { OrganizationMembersTbl } from "@/types/types";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 import "./auditor-style.css"
+import capitalize from "@/actions/capitalize";
 
 type Props = { orgMember: OrganizationMembersTbl }
 
@@ -26,13 +27,13 @@ export default async function OrgAuditor({ ...props }: Props) {
       <header className="dashboard">
         <h1><a href="/home"><u>Home</u></a></h1>
         <h1>Dashboard </h1>
-        <h1>User: {orgMember.userType}</h1>
+        <h1>User: {capitalize(orgMember.userType)}</h1>
       </header>
 
 
       <div className="sidebar">
         <h1>
-          <span>Money: {orgMember.money}php</span>
+          <span>Money: ₱{orgMember.money}</span>
         
           <a href={`./${orgMember.orgName}/members`}>
             <u>
@@ -52,7 +53,7 @@ export default async function OrgAuditor({ ...props }: Props) {
       </div>
 
       <div className="events-wrapper">
-        <h1>Events:</h1>
+        <h1>Organization: {orgMember.orgName}</h1>
         <div id="events">
           <div>Event Name:</div>
           <div>Budget:</div>
@@ -73,7 +74,7 @@ export default async function OrgAuditor({ ...props }: Props) {
                   </Button>
                 </div>
                 <div>
-                  {event.budget} php
+                  ₱{event.budget}
                 </div>
 
                 <input name="eventName" type="hidden" value={event.eventName} />

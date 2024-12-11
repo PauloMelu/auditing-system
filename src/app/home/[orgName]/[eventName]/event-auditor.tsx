@@ -6,7 +6,8 @@ import { uploadReceipt } from "@/actions/receipt-actions/upload-receipt"
 import { verifyReceipt } from "@/actions/receipt-actions/verify-receipt"
 import { Button } from "@/components/ui/button"
 import { OrganizationMembersTbl } from "@/types/types"
-import { CircleMinus } from "lucide-react"
+import "./auditor-style.css"
+import capitalize from "@/actions/capitalize"
 
 type Props = { orgMember: OrganizationMembersTbl, eventName: string }
 
@@ -22,8 +23,8 @@ export default async function EventAuditor({ ...props }: Props) {
     console.log(allReceipts)
 
     const spentBudget = allReceipts
-    .filter((receipt) => receipt.verified)
-    .reduce((sum, receipt) => sum += receipt.amount, 0)
+        .filter((receipt) => receipt.verified)
+        .reduce((sum, receipt) => sum += receipt.amount, 0)
 
     const remainingBudget: number = event.budget - spentBudget
 
@@ -32,48 +33,75 @@ export default async function EventAuditor({ ...props }: Props) {
 
     return (
         <div>
-            {props.orgMember.orgName} {props.eventName} <br />
-            Budget: {event.budget}php - Spent: {spentBudget}php - Remaining: {remainingBudget}php
-            <br />
-            <br />
-            <form>
-                <input type="text" name="ORNumber" placeholder="ORNumber" required />
-                <input type="number" name="amount" placeholder="Amount" required />
-                <input type="text" name="category" placeholder="Category" required />
+            <div id="receipt">
+                <h1></h1>
+                <h1><a href="./"><u>Back</u></a></h1>
+                <h1></h1>
+                <h1>{props.orgMember.orgName} {capitalize(props.eventName)}</h1>
+                <h1></h1>
+                <h1></h1>
+                <h1></h1>
+            </div>
+            <h1>Budget: ₱{event.budget} - Spent: ₱{spentBudget} - Remaining: ₱{remainingBudget}</h1>
 
-                <input name="orgName" type="hidden" value={orgName} />
-                <input name="userId" type="hidden" value={userId} />
-                <input name="eventName" type="hidden" value={eventName} />
-                <Button variant="outline" formAction={uploadReceipt}>Upload</Button>
+            <form>
+                <div className="sidebar">
+                    <center>
+                        <h1>Upload Receipt</h1>
+                        <input type="text" name="ORNumber" placeholder="ORNumber" required />
+                        <input type="number" name="amount" placeholder="Amount" required />
+                        <input type="text" name="category" placeholder="Category" required />
+
+                        <input name="orgName" type="hidden" value={orgName} />
+                        <input name="userId" type="hidden" value={userId} />
+                        <input name="eventName" type="hidden" value={eventName} />
+                        <Button variant="outline" formAction={uploadReceipt}>Upload</Button>
+                    </center>
+                </div>
             </form>
 
-            <h1>Receipts:</h1>
-            {allReceipts.map(async receipt => (
-                <div key={receipt.id}>
-                    <form>
-
-                    {(await getName(receipt.userId)).firstName} {(await getName(receipt.userId)).lastName} - {receipt.date.toString()}
-                    - {receipt.ORNumber} - {receipt.amount} - {receipt.category}
-                        
-                        <input name="receiptId" type="hidden" value={receipt.id}/>
-                        <input name="orgName" type="hidden" value={receipt.orgName}/>
-                        <input name="userId" type="hidden" value={receipt.userId}/>
-
-                        {receipt.verified ? (
-                            <Button variant="outline" disabled>
-                                verified
-                            </Button>
-                        ) : (
-                            <Button variant="outline" formAction={verifyReceipt}>
-                                verify
-                            </Button>
-                        )
-                        }
-                    </form>
+            <div className="auditor-receipt-wrapper">
+                <h1>Receipts:</h1>
+                <div id="receipt">
+                    <div>Name:</div>
+                    <div>Date:</div>
+                    <div>OR-Number:</div>
+                    <div>Amount:</div>
+                    <div>Category:</div>
+                    <div className="end"></div>
                 </div>
-            ))}
+                {allReceipts.map(async receipt => (
+                    <div key={receipt.id}>
+                        <form>
+                            <div id="receipt">
+                                <div>{(await getName(receipt.userId)).firstName} {(await getName(receipt.userId)).lastName}</div>
+                                <div>{new Date(receipt.date).toDateString()}</div>
+                                <div>{receipt.ORNumber}</div>
+                                <div>₱{receipt.amount}</div>
+                                <div>{receipt.category}</div>
 
-            
+                                <input name="receiptId" type="hidden" value={receipt.id} />
+                                <input name="orgName" type="hidden" value={receipt.orgName} />
+                                <input name="userId" type="hidden" value={receipt.userId} />
+                                <div className="end">
+                                    {receipt.verified ? (
+                                        <Button variant="outline" disabled>
+                                            verified
+                                        </Button>
+                                    ) : (
+                                        <Button variant="outline" formAction={verifyReceipt}>
+                                            verify
+                                        </Button>
+                                    )
+                                    }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                ))}
+            </div>
+
+
         </div>
     )
 };
