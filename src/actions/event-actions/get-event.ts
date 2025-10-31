@@ -16,6 +16,7 @@ export async function getEvents(orgName: string) {
     else
         return events   
 }
+//asdasdadsaasds
 
 export async function getEvent(orgName: string, eventName: string) {
     const supabase = await createClient()
